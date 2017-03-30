@@ -39,6 +39,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'rest_framework'
+
     # 手动创建的app
     'dao',  # models 所有的数据模型都在这里面
     'khafre',  # 埃及第四王朝法老 - 哈夫拉 - 有狮身人面像的法老 - 所有的 views 在这里
@@ -106,3 +108,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# 一些存储文件的domain
+accompany_domain = 'http://storage.intune.com/accompany'
+kgame_domain = 'http://storage.intune.com/kgame'
+image_domain = 'http://storage.intune.com/image'
+lyrics_domain = 'http://storage.intune.com/lyrics'
+storage_domain = 'http://storage.intune.com'

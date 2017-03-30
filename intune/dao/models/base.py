@@ -16,4 +16,4 @@ class Base(Model):
     deleted_at = DateTimeField(null=True, blank=True)
 
     is_enable = BooleanField(default=True)
-    is_delete = BooleanField(default=False)
+    # is_delete = BooleanField(default=False)
