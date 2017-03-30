@@ -1,0 +1,7 @@
+mysql-python==1.2.5
+django==1.9
+djangorestframework==3.6.2
+markdown==2.6.8
+django-filter==1.0.2
+python-social-auth==0.3.6
+django-rest_framework_social_oauth2==1.0.5

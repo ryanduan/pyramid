@@ -42,6 +42,11 @@ INSTALLED_APPS = (
     # 手动创建的app
     'dao',  # models 所有的数据模型都在这里面
     'khafre',  # 埃及第四王朝法老 - 哈夫拉 - 有狮身人面像的法老 - 所有的 views 在这里
+    'rest_framework',
+    'oauth2_provider',
+    'social_django',
+    'social.apps.django_app.default',
+    'rest_framework_social_oauth2',
 
 )
 
@@ -58,6 +63,16 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'khufu.urls'
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.ext.rest_framework.OAuth2Authentication',
+        'rest_framework_social_oauth2.authentication.SocialAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
+}
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -69,6 +84,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social.apps.django_app.context_processors.backends',
+                'social.apps.django_app.context_processors.login_redirect',
             ],
         },
     },
@@ -79,15 +96,54 @@ WSGI_APPLICATION = 'khufu.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
+DATABASES={
+    'default':{
+        'ENGINE':'django.db.backends.mysql',
+        'NAME':'khufu',
+        'USER':'root',
+        'PASSWORD':'123',
+        'HOST':'',
+        'PORT':'',
 
+    }
+}
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+"""
+AUTHENTICATION_BACKENDS = (
 
+    # Github OAuth2
+    'social_core.backends.facebook.FacebookAppOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'rest_framework_social_oauth2.backends.DjangoOAuth2',
+    'social.backends.github.GithubOAuth2',
+    # Local OAuth2
+    #'DRFSO2_Test.LocalOAuth2.LocalOAuth2',
+    #'rest_framework_social_oauth2.backends.DjangoOAuth2',
 
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_PIPELINE = (
+    'social.pipeline.social_auth.social_details',
+    'social.pipeline.social_auth.social_uid',
+    'social.pipeline.social_auth.auth_allowed',
+    'social.pipeline.social_auth.social_user',
+    'social.pipeline.user.get_username',
+    # 'social.pipeline.mail.mail_validation',
+    # 'social.pipeline.social_auth.associate_by_email',
+    'social.pipeline.user.create_user',
+    'social.pipeline.social_auth.associate_user',
+    'social.pipeline.social_auth.load_extra_data',
+    'social.pipeline.user.user_details',
+    # Local step
+    'DRFSO2_Test.auth_pipeline.redirect_with_access_token'
+)
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
@@ -106,3 +162,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+SOCIAL_AUTH_FACEBOOK_KEY = '2284251811799170'
+SOCIAL_AUTH_FACEBOOK_SECRET = 'ef82254347131b6a9c1203e5a56788a6'
+LOCALOAUTH2_API_URL = 'http://127.0.0.1:8000'
