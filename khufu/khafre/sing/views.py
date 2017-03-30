@@ -8,10 +8,12 @@
 @time: 2017/3/30 下午5:06
 @SOFTWARE:PyCharm
 """
-from django.http import HttpResponse,JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.generic import View
-#点击唱歌主页面
-def SingList(request):
+
+
+# 点击唱歌主页面
+def sing_list(request):
     """
     apiurl:/api/v1/singlist/
     请求方法GET
@@ -41,23 +43,26 @@ def SingList(request):
     """
 
     data = {
-            'banner_list':[{'bannerid':1,'title':'one banner','content':'xxxxx','imgurl':'http://www.dd.com/jj.jpg','linkurl':'http://www.dd.com/jjj.jpg'},
-                                              {'bannerid': 1, 'title': 'one banner', 'content': 'xxxxx',
-                                               'imgurl': 'http://www.dd.com/jj.jpg',
-                                               'linkurl': 'http://www.dd.com/jjj.jpg'},],
-            'recommended_list': [{'accompanyid':1,'title': 'this is a song', 'musicname': 'oncemore', 'singer':'zhoujielun',
-                          'authname': 'eric', 'vediourl': 'http://www.sxxx.com',
-                          'vediopic': 'http://xxx.com/vedio.jpg'}],
-            'new_list': [{'accompanyid':2,'title': 'this is a song', 'musicname': 'oncemore', 'singer':'wangd',
-                           'authname': 'eric', 'vediourl': 'http://www.sxxx.com',
-                           'vediopic': 'http://xxx.com/vedio.jpg'}]
-            }
+        'banner_list': [{'bannerid': 1, 'title': 'one banner', 'content': 'xxxxx', 'imgurl': 'http://www.dd.com/jj.jpg',
+                         'linkurl': 'http://www.dd.com/jjj.jpg'},
+                        {'bannerid': 1, 'title': 'one banner', 'content': 'xxxxx',
+                         'imgurl': 'http://www.dd.com/jj.jpg',
+                         'linkurl': 'http://www.dd.com/jjj.jpg'}, ],
+        'recommended_list': [
+            {'accompanyid': 1, 'title': 'this is a song', 'musicname': 'oncemore', 'singer': 'zhoujielun',
+             'authname': 'eric', 'vediourl': 'http://www.sxxx.com',
+             'vediopic': 'http://xxx.com/vedio.jpg'}],
+        'new_list': [{'accompanyid': 2, 'title': 'this is a song', 'musicname': 'oncemore', 'singer': 'wangd',
+                      'authname': 'eric', 'vediourl': 'http://www.sxxx.com',
+                      'vediopic': 'http://xxx.com/vedio.jpg'}]
+    }
 
     content = JsonResponse(data)
     return content
 
-#下载伴奏准备唱歌
-def StartSing(request,accompanyid):
+
+# 下载伴奏准备唱歌
+def StartSing(request, accompanyid):
     """
     apiurl:/api/v1/music/downaccompany?pk={}
     请求方法POST
@@ -77,20 +82,20 @@ def StartSing(request,accompanyid):
     :param musicid: 
     :return: 
     """
-    data={'accompanyid':1,'accompanyurl':'http:wdve','lyrics':'http://','user':'eric','imgtx':'http:',
-          'auth':[{'username':'dewdwe','imgtx':'http://ewfwe'}]
+    data = {'accompanyid': 1, 'accompanyurl': 'http:wdve', 'lyrics': 'http://', 'user': 'eric', 'imgtx': 'http:',
+            'auth': [{'username': 'dewdwe', 'imgtx': 'http://ewfwe'}]
 
-    }
+            }
     content = JsonResponse(data)
     return content
 
-#唱歌完毕要进行的操作
+
+# 唱歌完毕要进行的操作
 class SingControl(View):
+    def post(self, request, *args, **kwargs):
+        slug = self.kwargs.get('slug')
 
-    def post(self,request,*args,**kwargs):
-        slug=self.kwargs.get('slug')
-
-        if slug=='keepsing':
+        if slug == 'keepsing':
             return self.keepsing(request)
-        elif slug=='report':
+        elif slug == 'report':
             return self.report(request)

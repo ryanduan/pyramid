@@ -16,7 +16,6 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
@@ -27,7 +26,6 @@ SECRET_KEY = '#mz2o7(kn2ta8u0k*6o60^$(6+n!y7*z7z_=wc&i-&az@3x*!h'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -93,17 +91,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'khufu.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-DATABASES={
-    'default':{
-        'ENGINE':'django.db.backends.mysql',
-        'NAME':'khufu',
-        'USER':'root',
-        'PASSWORD':'123',
-        'HOST':'',
-        'PORT':'',
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'khufu',
+        'USER': 'root',
+        'PASSWORD': '111',
+        'HOST': '127.0.0.1',
+        'PORT': '3389',
 
     }
 }
@@ -123,8 +120,8 @@ AUTHENTICATION_BACKENDS = (
     'rest_framework_social_oauth2.backends.DjangoOAuth2',
     'social.backends.github.GithubOAuth2',
     # Local OAuth2
-    #'DRFSO2_Test.LocalOAuth2.LocalOAuth2',
-    #'rest_framework_social_oauth2.backends.DjangoOAuth2',
+    # 'DRFSO2_Test.LocalOAuth2.LocalOAuth2',
+    # 'rest_framework_social_oauth2.backends.DjangoOAuth2',
 
     'django.contrib.auth.backends.ModelBackend',
 )
@@ -157,13 +154,13 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
 
-
 SOCIAL_AUTH_FACEBOOK_KEY = '2284251811799170'
 SOCIAL_AUTH_FACEBOOK_SECRET = 'ef82254347131b6a9c1203e5a56788a6'
 LOCALOAUTH2_API_URL = 'http://127.0.0.1:8000'
+
+STORAGE_DOMAIN = 'http://storage.intune.com'
